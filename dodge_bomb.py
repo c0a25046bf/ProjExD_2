@@ -2,6 +2,7 @@ import os
 import sys
 import random
 import pygame as pg
+import time
 
 
 WIDTH, HEIGHT = 1100, 650
@@ -26,7 +27,32 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
         tate = False
     return yoko, tate
 
+def game_over(screen: pg.Surface,) -> None:
+    dd_img =pg.Surface((WIDTH, HEIGHT))
+    pg.draw.rect(dd_img, (0, 0, 0), (0, 0, WIDTH, HEIGHT))
+    dd_img.set_alpha(150)
+    
+    
 
+    font = pg.font.Font(None, 150)
+    text = font.render("GAME OVER", True, (255, 255, 255))
+    text_rect = text.get_rect()
+    text_rect.center = WIDTH // 2, HEIGHT // 2
+
+
+    kk_img = pg.image.load("fig/8.png")
+
+    screen.blit(dd_img, (0, 0))
+    screen.blit(text, text_rect)
+    screen.blit(kk_img, (text_rect.centerx - 370, text_rect.centery - 50))
+    screen.blit(kk_img, (text_rect.centerx + 370, text_rect.centery - 50))
+
+
+
+    pg.display.update()
+    pg.time.sleep(5)  # 5秒待機
+
+    
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -42,7 +68,7 @@ def main():
     bb_rct = bb_img.get_rect()
     bb_rct.centerx = random.randint(0, WIDTH)
     bb_rct.centery = random.randint(0, HEIGHT)
-    vx, vy = +5, +5
+    vx, vy = +1, +1
 
     clock = pg.time.Clock()
     tmr = 0
@@ -52,9 +78,10 @@ def main():
                 return
         
         if kk_rct.colliderect(bb_rct):
-            print("GAME OVER")
+            game_over(screen)
             return
         screen.blit(bg_img, [0, 0]) 
+        
 
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
@@ -87,6 +114,7 @@ def main():
         pg.display.update()
         tmr += 1
         clock.tick(50)
+
 
 
 if __name__ == "__main__":
