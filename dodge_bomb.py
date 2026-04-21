@@ -37,7 +37,7 @@ def game_over(screen: pg.Surface,) -> None:
     font = pg.font.Font(None, 150)
     text = font.render("GAME OVER", True, (255, 255, 255))
     text_rect = text.get_rect()
-    text_rect.center = WIDTH // 2, HEIGHT // 2
+    text_rect.center = WIDTH // 2, HEIGHT // 2 # 画面中央に配置
 
 
     kk_img = pg.image.load("fig/8.png")
